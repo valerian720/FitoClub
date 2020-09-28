@@ -6,9 +6,10 @@ from producer.models import *
 
 def index(request):
     if request.user.is_authenticated:
-        producers = Producer.objects.all()
+        producers = Producer.objects.all().select_related("name","product_types")
 
-        context = {"qq": serializers.serialize('json', list(producers), fields=('name','product_types')) }
+        # context = {"producer_list": serializers.serialize('json', list(producers), fields=('name','product_types')) }
+        context = {"producer_list": serializers.serialize('json',producers) }
         return render(request, 'index.html', context)
     else:
         return redirect('/login', permanent=False)

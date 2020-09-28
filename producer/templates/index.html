@@ -14,7 +14,11 @@
     }
     <div id="app">
         <div v-on:click="vote()">
-            [[ message ]]
+            [[ producer_list ]]
+
+            <div v-for="(item, index) in producer_list" :key="index">
+                <p>[[item]]</p>
+            </div>
         </div>
     </div>
 
@@ -24,10 +28,12 @@
             delimiters: ["[[", "]]"],
             el: '#app',
             data: {
-                message: '{{producer_list}}'
+                producer_list: JSON.parse('{{producer_list}}'.replaceAll("&quot;","\"")),
             },
             methods: {
-                vote: function() {alert('vote')}
+                vote: function() {
+                     console.log(this.message);
+                }
             },
         });
     </script>
